@@ -1,6 +1,8 @@
-<nav class="navbar navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
+<nav class="navbar navbar-dark bg-dark d-flex flex-row">
+  <a class="navbar-brand d-block" href="">
     <img src="/src/assets/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
     Forum
   </a>
+  <div *ngIf="userService.getLoggedUser()"  class="user-greeting">Hello, {{ userService.getLoggedUser().name }}!</div>
+  <button *ngIf="userService.getLoggedUser()" (click)="logOut()" class="btn btn-outline-primary">Log Out</button>
 </nav>

@@ -8,6 +8,10 @@ import {RouterModule, Routes} from '@angular/router';
 import {ForumCoreModule} from './core/core.module';
 import { MainPageComponent } from './main-page/main-page.component';
 import {AuthGuard} from './core/auth.guard';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {MessagesService} from './main-page/services/messages.service';
+import { MessageComponent } from './main-page/message/message.component';
+import {HttpClientModule} from '@angular/common/http';
 
 
 const appRoutes: Routes = [
@@ -21,13 +25,17 @@ const appRoutes: Routes = [
     AppComponent,
     LoginPageComponent,
     HeaderComponent,
-    MainPageComponent
+    MainPageComponent,
+    MessageComponent
   ],
   imports: [
     ForumCoreModule,
     RouterModule.forRoot(appRoutes),
-    BrowserModule
+    BrowserModule,
+    HttpClientModule,
+    FontAwesomeModule
   ],
+  providers: [MessagesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

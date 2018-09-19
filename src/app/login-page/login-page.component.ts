@@ -14,7 +14,7 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
   }
   logIn(username: string) {
-    this.userService.logIn({name: username});
+    this.userService.logIn({ name: username });
     this.router.navigate(['/messages']);
   }
 }

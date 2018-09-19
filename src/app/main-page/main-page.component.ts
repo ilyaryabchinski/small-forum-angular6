@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {MessagesService} from './services/messages.service';
+import {MessageModel} from '../shared/models/message.model';
+
 
 @Component({
   selector: 'forum-main-page',
@@ -7,9 +11,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainPageComponent implements OnInit {
 
-  constructor() { }
+  public messages: MessageModel[];
+
+  constructor(private modalService: NgbModal, private messagesService: MessagesService) {}
 
   ngOnInit() {
+    this.messagesService.getAll().subscribe(
+      response => this.messages = response
+    );
   }
 
 }
