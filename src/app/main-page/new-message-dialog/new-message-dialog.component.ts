@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder} from '@angular/forms';
 import {MessageModel} from '../../shared/models/message.model';
 import { Validators } from '@angular/forms';
@@ -17,7 +17,7 @@ export class NewMessageDialogComponent {
       Validators.minLength(5),
       ]
     ],
-    message: ['', [
+    body: ['', [
       Validators.required,
       Validators.maxLength(100)
       ]
@@ -26,10 +26,14 @@ export class NewMessageDialogComponent {
 
   @Output() newMessage$ = new EventEmitter<MessageModel>();
 
-  constructor(public modal: NgbActiveModal, private fb: FormBuilder) { }
+  constructor(public modal: NgbModal, private fb: FormBuilder) { }
 
   public onSaveMessage() {
-    console.log(this.messageForm.value as MessageModel);
+    this.newMessage$.emit(this.messageForm.value as MessageModel);
   }
+
+  get title() { return this.messageForm.get('title'); }
+
+  get body() { return this.messageForm.get('body'); }
 
 }

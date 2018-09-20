@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+ import { Component, OnInit } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MessagesService} from './services/messages.service';
 import {MessageModel} from '../shared/models/message.model';
-import {NewMessageDialogComponent} from './new-message-dialog/new-message-dialog.component';
+ import {forkJoin} from 'rxjs';
+ import {concatMap, map, mergeMap} from 'rxjs/operators';
+ import {UserService} from '../core/user.service';
 
 
 
@@ -15,7 +17,9 @@ export class MainPageComponent implements OnInit {
 
   public messages: MessageModel[];
 
-  constructor(private modalService: NgbModal, private messagesService: MessagesService) {}
+  constructor(private modalService: NgbModal,
+              private messagesService: MessagesService,
+              private userService: UserService) {}
 
   ngOnInit() {
     this.messagesService.getAll().subscribe(
@@ -23,7 +27,15 @@ export class MainPageComponent implements OnInit {
     );
   }
 
-  open() {
-    this.modalService.open(NewMessageDialogComponent);
+  open(dialog) {
+    this.modalService.open(dialog);
+  }
+
+  onNewMessageRecieved(message: MessageModel) {
+    message.author = this.userService.getLoggedUser().name;
+
+    forkJoin(this.messagesService.save(message), this.messagesService.getAll())
+      .subscribe(([res1, res2]) => this.messages = res2);
+
   }
 }

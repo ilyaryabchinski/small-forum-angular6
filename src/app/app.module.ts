@@ -11,7 +11,7 @@ import {MessagesService} from './main-page/services/messages.service';
 import { MessageComponent } from './main-page/message/message.component';
 import {HttpClientModule} from '@angular/common/http';
 import { NewMessageDialogComponent } from './main-page/new-message-dialog/new-message-dialog.component';
-import {NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgbActiveModal, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {appRoutes} from './app.routes';
 import {ReactiveFormsModule} from '@angular/forms';
 
@@ -36,7 +36,6 @@ import {ReactiveFormsModule} from '@angular/forms';
     FontAwesomeModule
   ],
   providers: [MessagesService],
-  bootstrap: [AppComponent],
-  entryComponents: [NewMessageDialogComponent]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
