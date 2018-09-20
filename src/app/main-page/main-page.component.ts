@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MessagesService} from './services/messages.service';
 import {MessageModel} from '../shared/models/message.model';
+import {NewMessageDialogComponent} from './new-message-dialog/new-message-dialog.component';
+
 
 
 @Component({
@@ -21,4 +23,7 @@ export class MainPageComponent implements OnInit {
     );
   }
 
+  open() {
+    this.modalService.open(NewMessageDialogComponent);
+  }
 }
