@@ -3,15 +3,19 @@
     <div class="card">
       <div class="card-body d-flex flex-column mb-3 ml-3 mr-3">
         <h5 class="card-title">Log In</h5>
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">@</span>
+        <form [formGroup]="loginForm" (ngSubmit)="logIn()">
+          <div class="form-group">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">@</span>
+              </div>
+              <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                     aria-describedby="basic-addon1" formControlName="username">
+            </div>
           </div>
-          <input #inputUsername type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-        </div>
-        <button (click)="logIn(inputUsername.value)" type="button" class="btn btn-primary align-self-center" >Submit</button>
+          <button type="submit" class="btn btn-primary align-self-center">Submit</button>
+        </form>
       </div>
-
     </div>
   </div>
 </div>

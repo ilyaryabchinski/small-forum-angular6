@@ -11,9 +11,11 @@ import {MessagesService} from './main-page/services/messages.service';
 import { MessageComponent } from './main-page/message/message.component';
 import {HttpClientModule} from '@angular/common/http';
 import { NewMessageDialogComponent } from './main-page/new-message-dialog/new-message-dialog.component';
-import {NgbActiveModal, NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModalModule} from '@ng-bootstrap/ng-bootstrap';
 import {appRoutes} from './app.routes';
 import {ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 
 
@@ -32,6 +34,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     ForumCoreModule,
     RouterModule.forRoot(appRoutes),
     BrowserModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     HttpClientModule,
     FontAwesomeModule
   ],

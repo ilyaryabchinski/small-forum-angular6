@@ -2,9 +2,10 @@
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MessagesService} from './services/messages.service';
 import {MessageModel} from '../shared/models/message.model';
- import {forkJoin} from 'rxjs';
+ import {forkJoin, Observable} from 'rxjs';
  import {concatMap, map, mergeMap} from 'rxjs/operators';
  import {UserService} from '../core/user.service';
+ import {empty} from 'rxjs/internal/Observer';
 
 
 
@@ -34,8 +35,13 @@ export class MainPageComponent implements OnInit {
   onNewMessageRecieved(message: MessageModel) {
     message.author = this.userService.getLoggedUser().name;
 
-    forkJoin(this.messagesService.save(message), this.messagesService.getAll())
-      .subscribe(([res1, res2]) => this.messages = res2);
-
+    this.messagesService.save(message).pipe(
+      mergeMap(res => {
+        return this.messagesService.getAll();
+      })
+    ).subscribe(res => {
+        this.messages = res;
+        this.modalService.dismissAll();
+    });
   }
 }
