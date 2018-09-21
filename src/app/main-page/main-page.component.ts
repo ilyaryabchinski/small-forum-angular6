@@ -1,11 +1,10 @@
- import { Component, OnInit } from '@angular/core';
+ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MessagesService} from './services/messages.service';
 import {MessageModel} from '../shared/models/message.model';
- import {forkJoin, Observable} from 'rxjs';
+ import {Subscription, timer} from 'rxjs';
  import {concatMap, map, mergeMap} from 'rxjs/operators';
  import {UserService} from '../core/user.service';
- import {empty} from 'rxjs/internal/Observer';
 
 
 
@@ -14,18 +13,24 @@ import {MessageModel} from '../shared/models/message.model';
   templateUrl: './main-page.component.html',
   styleUrls: ['./main-page.component.css']
 })
-export class MainPageComponent implements OnInit {
+export class MainPageComponent implements OnInit, OnDestroy {
 
   public messages: MessageModel[];
+  private messagesSubcription: Subscription;
 
   constructor(private modalService: NgbModal,
               private messagesService: MessagesService,
               private userService: UserService) {}
 
   ngOnInit() {
-    this.messagesService.getAll().subscribe(
-      response => this.messages = response
-    );
+    this.messagesSubcription = timer(0, 3000)
+      .pipe(
+        concatMap(_ => this.messagesService.getAll()),
+        map(response => this.messages = response)
+      ).subscribe();
+  }
+  ngOnDestroy() {
+    this.messagesSubcription.unsubscribe();
   }
 
   open(dialog) {
