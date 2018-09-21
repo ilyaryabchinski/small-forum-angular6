@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {UserService} from '../../../core/user.service';
 import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'forum-header',
@@ -9,13 +10,16 @@ import {Router} from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public userService: UserService, private router: Router) { }
+  constructor(public userService: UserService, private router: Router, private toastr: ToastrService) { }
 
   ngOnInit() {
   }
   public logOut() {
     this.userService.logOut();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/login']).then(res => {
+      this.toastr.clear();
+      this.toastr.info('You\'ve been logged out', '', {positionClass: 'toast-bottom-right'})
+    });
   }
 
 }
