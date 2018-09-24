@@ -12,7 +12,7 @@ export class UserService {
     const username = sessionStorage.getItem(this.SESSION_KEY);
     return username ? {name: username} : null;
   }
-  public isLogggedIn(): boolean {
+  public isLoggedIn(): boolean {
     return sessionStorage.getItem(this.SESSION_KEY) ? true : false;
   }
   public logOut() {

@@ -29,19 +29,19 @@ describe('UserService', () => {
 
   it('should log in', () => {
     service.logIn({name: 'ilyar'});
-    expect(service.isLogggedIn()).toBeTruthy();
+    expect(service.isLoggedIn()).toBeTruthy();
   });
 
   it('should log out', () => {
     service.logIn({name: 'ilyar'});
     service.logOut();
-    expect(service.isLogggedIn()).toBeFalsy();
+    expect(service.isLoggedIn()).toBeFalsy();
   });
 
   it('should return user', () => {
     const user: UserModel = {name: 'ilyar'};
     service.logIn(user);
-    expect(service.getLoggedUser()).toBe(user);
+    expect(service.getLoggedUser()).toEqual(user);
   });
 
 });
