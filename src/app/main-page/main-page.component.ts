@@ -3,7 +3,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MessagesService} from './services/messages.service';
 import {MessageModel} from '../shared/models/message.model';
  import {Subscription, timer} from 'rxjs';
- import {concatMap, map, mergeMap} from 'rxjs/operators';
+ import {concatMap, mergeMap} from 'rxjs/operators';
  import {UserService} from '../core/user.service';
 
 
