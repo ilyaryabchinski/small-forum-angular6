@@ -3,6 +3,6 @@
     <img src="/src/assets/logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
     Forum
   </a>
-  <div *ngIf="userService.getLoggedUser()"  class="user-greeting">Hello, {{ userService.getLoggedUser().name }}!</div>
-  <button *ngIf="userService.getLoggedUser()" (click)="logOut()" class="btn btn-outline-primary">Log Out</button>
+  <div *ngIf="userService.isLoggedIn()"  class="user-greeting">Hello, {{ userService.getLoggedUser().name }}!</div>
+  <button *ngIf="userService.isLoggedIn()" (click)="logOut()" class="btn btn-outline-primary">Log Out</button>
 </nav>

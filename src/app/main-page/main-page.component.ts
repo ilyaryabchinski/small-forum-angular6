@@ -26,8 +26,9 @@ export class MainPageComponent implements OnInit, OnDestroy {
     this.messagesSubcription = timer(0, 3000)
       .pipe(
         concatMap(_ => this.messagesService.getAll()),
-        map(response => this.messages = response)
-      ).subscribe();
+      ).subscribe(
+        response => this.messages = response
+      );
   }
   ngOnDestroy() {
     this.messagesSubcription.unsubscribe();

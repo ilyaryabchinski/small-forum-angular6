@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
     this.userService.logOut();
     this.router.navigate(['/login']).then(res => {
       this.toastr.clear();
-      this.toastr.info('You\'ve been logged out', '', {positionClass: 'toast-bottom-right'})
+      this.toastr.info('You\'ve been logged out', '', {positionClass: 'toast-bottom-right'});
     });
   }
 
