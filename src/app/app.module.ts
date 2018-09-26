@@ -16,6 +16,7 @@ import {appRoutes} from './app.routes';
 import {ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
+import {MessagesWebsocketService} from './main-page/services/messages-websocket.service';
 
 
 
@@ -39,7 +40,7 @@ import {ToastrModule} from 'ngx-toastr';
     HttpClientModule,
     FontAwesomeModule
   ],
-  providers: [MessagesService],
+  providers: [MessagesService, MessagesWebsocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

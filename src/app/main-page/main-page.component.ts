@@ -2,9 +2,10 @@
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MessagesService} from './services/messages.service';
 import {MessageModel} from '../shared/models/message.model';
- import {Subscription, timer} from 'rxjs';
+ import {Observable, Subscription, timer} from 'rxjs';
  import {concatMap, mergeMap} from 'rxjs/operators';
  import {UserService} from '../core/user.service';
+ import {MessagesWebsocketService} from './services/messages-websocket.service';
 
 
 
@@ -16,22 +17,22 @@ import {MessageModel} from '../shared/models/message.model';
 export class MainPageComponent implements OnInit, OnDestroy {
 
   public messages: MessageModel[];
-  private messagesSubcription: Subscription;
+  private websocketConnection: Subscription;
 
   constructor(private modalService: NgbModal,
               private messagesService: MessagesService,
+              private messagesWSService: MessagesWebsocketService,
               private userService: UserService) {}
 
   ngOnInit() {
-    this.messagesSubcription = timer(0, 3000)
-      .pipe(
-        concatMap(_ => this.messagesService.getAll()),
-      ).subscribe(
-        response => this.messages = response
-      );
+    this.websocketConnection = this.messagesWSService
+      .connect()
+      .subscribe(data => {
+      this.messages = data;
+    });
   }
   ngOnDestroy() {
-    this.messagesSubcription.unsubscribe();
+    this.websocketConnection.unsubscribe();
   }
 
   open(dialog) {
@@ -41,13 +42,16 @@ export class MainPageComponent implements OnInit, OnDestroy {
   onNewMessageRecieved(message: MessageModel) {
     message.author = this.userService.getLoggedUser().name;
 
-    this.messagesService.save(message).pipe(
-      mergeMap(res => {
-        return this.messagesService.getAll();
-      })
-    ).subscribe(res => {
-        this.messages = res;
-        this.modalService.dismissAll();
-    });
+    this.messagesWSService.sendMessage(message);
+    this.modalService.dismissAll();
+
+    // this.messagesService.save(message).pipe(
+    //   mergeMap(res => {
+    //     return this.messagesService.getAll();
+    //   })
+    // ).subscribe(res => {
+    //     this.messages = res;
+    //     this.modalService.dismissAll();
+    // });
   }
 }
