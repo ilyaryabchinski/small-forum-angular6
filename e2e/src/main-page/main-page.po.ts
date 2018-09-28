@@ -7,7 +7,7 @@ export class MainPage {
     browser.get('/login');
     const usernameInput = element(by.css('input.form-control'));
     usernameInput.sendKeys(this.TEST_USERNAME);
-    return element(by.css('button[type=submit]')).click();
+    element(by.css('button[type=submit]')).click();
   }
 
   logout() {
